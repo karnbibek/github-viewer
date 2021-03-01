@@ -1,3 +1,8 @@
+//variables
+$bp-large: 70em;
+$bp-medium: 64em;
+$bp-small: 54em;
+
 *,
 *::before,
 *::after {
@@ -13,7 +18,7 @@ html {
 body {
   box-sizing: border-box;
   padding: 3rem;
-  background: #edf6ff;
+  background: #f0f2f5;
 }
 
 a {
@@ -25,20 +30,21 @@ a {
 .search {
   height: 8rem;
   border-radius: 10rem;
-  // background: linear-gradient(45deg, rgba(#6b7b8f, 1), #3c4b66);
-  // background-color: darkgray;
+  position: sticky;
+  top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #fff;
   box-shadow: -2px -2px 6px rgba(#fff, 0.6), 2px 2px 12px #c8d8e7;
 
-  &__input-err {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 2.5rem;
-  }
+  // &__input-err {
+  //   display: flex;
+  //   flex-direction: column;
+  //   justify-content: center;
+  //   align-items: center;
+  //   margin: 2.5rem;
+  // }
 
   &__error {
     font-size: 3rem;
@@ -51,26 +57,24 @@ a {
     background-color: #e3edf7;
     border: none;
     border-radius: 3rem;
-    // color: brown;
     font-size: 2rem;
-    // border-radius: 10rem;
-    // margin: 2.5rem;
-    // margin: 2.5rem;
-    // margin-bottom: 0;
     padding: 1.5rem;
     font-family: "Orbitron", sans-serif;
     font-weight: 600;
     color: #d84e59;
     outline: none;
-    cursor: pointer;
   }
 
   &__input {
-    width: 90%;
+    min-width: max-content;
+    background: #fff;
+    width: 80%;
+    color: #d84e59;
+    margin: 2.5rem;
     box-shadow: -2px -2px 6px rgba(#fff, 0.6), 2px 2px 12px #c8d8e7;
 
     &:focus {
-      background-color: #f1f3f5;
+      color: #d84e59;
       width: 100%;
       border: none;
     }
@@ -78,6 +82,7 @@ a {
 
   &__button {
     margin-right: 2rem;
+    cursor: pointer;
     box-shadow: -2px -2px 6px rgba(#fff, 0.6), 2px 2px 12px #c8d8e7;
   }
 }
@@ -85,32 +90,49 @@ a {
 .content {
   margin: 2rem 0;
   padding: 3rem;
-  background-color: #faf9f9;
-  height: 100vh;
+  background-color: #f1f1f1;
+  min-height: 100vh;
   border-radius: 5px;
   box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
 
   display: grid;
-  grid-template-columns: 30% 70%;
+  grid-template-columns: 25% 75%;
+
+  @media only screen and (max-width: $bp-medium) {
+    padding: 1rem;
+  }
+
+  @media only screen and (max-width: $bp-small) {
+    grid-template-columns: 1fr;
+  }
 
   &__left {
     display: flex;
     flex-direction: column;
 
+    @media only screen and (max-width: $bp-small) {
+      align-items: center;
+    }
+
     & > * {
       margin-bottom: 2rem;
+      font-size: 2rem;
+      font-weight: 300;
+      color: inherit;
     }
 
     &-image-1 {
-      height: 15rem;
+      height: 20rem;
       border-radius: 50%;
     }
 
     &-name {
+      @media only screen and (max-width: $bp-small) {
+        display: flex;
+        flex-direction: column;
+      }
+
       &-1 {
-        //    text-decoration: none;
-        //    cursor: pointer;
-        //    color: inherit;
         font-size: 3rem;
         font-weight: 500;
       }
@@ -119,32 +141,64 @@ a {
         color: grey;
         font-size: 2rem;
         font-weight: 400;
+
+        @media only screen and (max-width: $bp-small) {
+          align-self: center;
+        }
       }
     }
 
     &-bio {
-      align-self: center;
       font-size: 2rem;
       font-weight: 300;
       color: inherit;
+    }
+
+    &-following,
+    &-followers {
+      font-size: 1.5rem;
     }
   }
 
   &__right {
     padding: 2rem;
     font-size: 2rem;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 50%);
+
+    @media only screen and (max-width: $bp-large) {
+      grid-template-columns: repeat(auto-fit, 100%);
+    }
+
+    &-title {
+      margin-left: 2rem;
+      font-size: 4rem;
+      font-weight: 600;
+      color: #863719;
+      grid-row: 1/2;
+      grid-column: 1/-1;
+    }
 
     &-item {
-        padding: 1rem;
-        margin: 1rem;
-        border-radius: 1rem;
-        border: 1px solid grey;
-        
-        &-name {
-            color: rgb(83, 83, 168);
-        }
+      padding: 1rem;
+      margin: 1rem;
+      min-height: 16rem;
+      max-height: 18rem;
+      border-radius: 1rem;
+      border: 1px solid grey;
+      overflow: auto;
+      background: #fff;
+      box-shadow: 2px 5px 10px grey;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+
+      &-name {
+        font-size: 3rem;
+        font-weight: 400;
+        color: rgb(83, 83, 168);
+      }
     }
   }
 }

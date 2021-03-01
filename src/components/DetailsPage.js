@@ -1,33 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import Searchbar from './Searchbar';
 import github from '../api/github';
-import Languages from './Languages';
 
 const DetailsPage = () => {
 
     const [results, setResults] = useState('');
     const [repositories, setRepositories] = useState('');
-    // const [isLoading, setIsLoading] = useState(false);
 
     const renderResults = async (term) => {
-        // if (term) {
-        // const response = await github.get(`/${term}`);
-        // const repo = await github.get(`/${term}/repos`);
-        const response = await github.get(`/karnbibek`);
-        const repo = await github.get(`/karnbibek/repos`);
-        setResults(response.data);
-        setRepositories(repo.data);
-        console.log(repo.data);
-        // }
-        // else {
-        //     return null;
-        // }
+        if (term) {
+            const response = await github.get(`/${term}`);
+            const repo = await github.get(`/${term}/repos`);
+            setResults(response.data);
+            setRepositories(repo.data);
+        }
+        else {
+            return null;
+        }
     };
 
     useEffect(() => {
-        // setIsLoading(true);
         renderResults();
-        // setIsLoading(false);
     }, [])
 
     return (
@@ -46,14 +39,21 @@ const DetailsPage = () => {
                         <div className="content__left-bio">
                             {results.bio}
                         </div>
+                        <div className="content__left-following">
+                            Following: {results.following}
+                        </div>
+                        <div className="content__left-followers">
+                            Followers: {results.followers}
+                        </div>
                     </div>
                     {repositories ?
                         <div className="content__right">
+                            <div className="content__right-title">Repositories</div>
                             {repositories.map((repository) =>
                                 <div className="content__right-item" key={repository.id}>
                                     <a href={repository.html_url} className="content__right-item-name">{repository.name}</a>
                                     <div className="content__right-item-details">
-                                        <Languages link={repository.languages_url} />
+                                        {repository.language ? <>Main language: {repository.language}</> : null}
                                     </div>
                                 </div>)
                             }
